@@ -48,14 +48,18 @@ The state machine lives in [`backend/app/agents/graph.py`](backend/app/agents/gr
 
 `eval/run_eval.py` runs every question through the full agent graph and compares the returned rows with the gold query's rows (column names ignored, row order ignored unless it matters, numeric tolerance).
 
+Results with `openai/gpt-oss-120b` on Groq (November 2026):
+
 | Metric | Result |
 |---|---|
-| Execution accuracy (all) | _run the eval and fill in_ |
-| Easy / Medium / Hard | _ / _ / _ |
-| First-try accuracy | _ |
-| Questions rescued by the SQL Fixer | _ |
-| Refusal accuracy (unsafe / off-topic) | _ |
-| Average latency | _ s |
+| **Execution accuracy** | **95.7%** (45 / 47) |
+| Easy / Medium / Hard | 100% / 94.1% / 93.3% |
+| First-try accuracy | 95.7% |
+| Refusal accuracy (unsafe / off-topic) | 100% (5 / 5) |
+| Average latency | 11.5 s per question |
+| Average tokens | ~2,800 per question |
+
+The SQL Fixer wasn't needed on this benchmark (every correct answer was right on the first try); the self-correction loop is covered by the unit tests in `tests/test_graph.py`.
 
 ```bash
 cd backend
